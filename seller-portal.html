@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Apartment Search Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        
+      }
+      form {
+        background-color: #ff6347;
+        padding: 20px;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 5px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      input[type="submit"] {
+        background-color: #fff;
+        color: #ff6347;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #e05134;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1> SUBMIT YOUR PROPERTY</h1>
+    <form action="/submit-search" method="post" enctype="multipart/form-data">
+      <label for="location">Location:</label>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14310.499228562687!2d81.50476645!3d26.27383775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1714238737803!5m2!1sen!2sin" width="100" height="100" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <input type="text" id="location" name="location" value=""><br>
+      <label for="apartmentType">Apartment Type:</label>
+      <select id="apartmentType" name="apartmentType">
+        <option value="studio">Studio</option>
+        <option value="1bedroom">1 Bedroom</option>
+        <option value="2bedroom">2 Bedroom</option>
+        <option value="3bedroom">3 Bedroom</option>
+      </select><br>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" value=""><br>
+      <label for="photo">Photo:</label>
+      <input type="file" id="photo" name="photo" value=""><br>
+      <input type="submit" value="Submit">
+    </form>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCbYRhrvd2xzNDnKdmZOZDOAjO_Wh99Lrw",
+        authDomain: "realestate-2e859.firebaseapp.com",
+        databaseURL: "https://realestate-2e859-default-rtdb.firebaseio.com",
+        projectId: "realestate-2e859",
+        storageBucket: "realestate-2e859.appspot.com",
+        messagingSenderId: "381741433460",
+        appId: "1:381741433460:web:fee25b4b4bf654869d4721"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const location = document.querySelector('#location').value;
+        const apartmentType = document.querySelector('#apartmentType').value;
+        const price = document.querySelector('#price').value;
+        const photo = document.querySelector('#photo').files[0];
+
+        // Send the form data to Firebase
+        const database = firebase.database();
+        const ref = database.ref('apartments');
+        const newApartmentRef = ref.push();
+        newApartmentRef.set({
+          location: location,
+          apartmentType: apartmentType,
+          price: price,
+          photo: photo
+        });
+
+        // Reset the form
+        form.reset();
+      });
+    </script>
+  </body>
+</html>

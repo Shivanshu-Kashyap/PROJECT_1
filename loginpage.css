@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    background-image: url(login.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 400px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginbg {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.box {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+}
+
+.signinbtn,
+.signupbtn {
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: #f7f7f7;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signinbtn:hover,
+.signupbtn:hover {
+    background-color: #ff6347;
+}
+
+.formbx {
+    padding: 20px;
+    transition: transform 0.3s ease;
+    color: #f7f7f7;
+}
+
+.form {
+    display: none;
+}
+
+.form.active {
+    display: block;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #f7f0f0;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6347;
+    color: #f6450b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff6347;
+}
+
+.forgot {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #ff6347;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.forgot:hover {
+    color: #df7931;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .loginbg {
+        flex-direction: column;
+    }
+    .formbx {
+        margin-top: 20px;
+    }
+    .form {
+        width: 100%;
+    }
+}

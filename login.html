@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="loginpage.css">
+    <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css"/>
+    <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="loginbg">
+        <div class="box signin">
+            <h2>Already Have an Account ?</h2>
+            <button class="signinbtn">Sign in</button>
+        </div>
+        <div class="box signup">
+            <h2>Don't Have an Account ?</h2>
+            <button class="signupbtn">Sign up</button>
+        </div>
+    </div>
+    <div class="formbx">
+        <div class="form signinform active">
+            <form>
+                <h3>signin</h3>
+        
+                <input type="text" id="login_email" placeholder="E-mail">
+                <input type="password" id="login_password" placeholder="Password">
+                <button type="button" id="login" name="login" class="btn btn-success">Login</button>
+                <a href="#" class="forgot">Forgot password?</a>
+            </form>
+        </div>
+        <div class="form signupform">
+            <form>
+                <h3>signup</h3>
+                <input type="text" id="name"placeholder="Enter Your Name">
+                <input type="text" id="email" placeholder="Email">
+                <input name="phone" type="text" id="phone"> 
+                <input type="password" id="password" placeholder="Password">
+                <input type="password" id="Confirmpassword" placeholder="Confirm password">
+                <button type="button" id="register" name="register" class="btn btn-success" >Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const signinbtn = document.querySelector('.signinbtn');
+    const signupbtn = document.querySelector('.signupbtn');
+    const formbx = document.querySelector('.formbx'); 
+
+    signupbtn.onclick = function(){
+        formbx.classList.add('active');
+        document.querySelector('.signupform').classList.add('active');
+        document.querySelector('.signinform').classList.remove('active');
+    }
+    signinbtn.onclick = function(){
+        formbx.classList.remove('active');
+        document.querySelector('.signinform').classList.add('active');
+        document.querySelector('.signupform').classList.remove('active');
+    }
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        separateDialCode: true
+    });
+</script>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCbYRhrvd2xzNDnKdmZOZDOAjO_Wh99Lrw",
+        authDomain: "realestate-2e859.firebaseapp.com",
+        projectId: "realestate-2e859",
+        storageBucket: "realestate-2e859.appspot.com",
+        messagingSenderId: "381741433460",
+        appId: "1:381741433460:web:fee25b4b4bf654869d4721"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth= getAuth();
+
+    console.log(app);
+    document.getElementById("register").addEventListener("click", function() {
+        var email =  document.getElementById("email").value;
+        var Name =  document.getElementById("name").value;
+        var phone =  document.getElementById("phone").value;
+        var password = document.getElementById("password").value;
+        var confirm_pass=document.getElementById("Confirmpassword").value;
+
+        if(password!=confirm_pass){
+            alert("Enter the Confirm Password same as Password")
+        }
+        //For new registration
+        createUserWithEmailAndPassword(auth,email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                alert("Registration successfully!!");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+                console.log(errorMessage);
+                alert(error);
+            });		  		  
+    });
+
+    document.getElementById("login").addEventListener("click", function() {
+        var email =  document.getElementById("login_email").value;
+        var password = document.getElementById("login_password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                alert(user.email+" Login successfully!!!");
+                document.getElementById('logout').style.display = 'block';
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert(errorMessage);
+            });		  		  
+    }); 
+</script>     
+
+</body>
+</html>

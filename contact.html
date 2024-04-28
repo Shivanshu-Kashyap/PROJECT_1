@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* CSS for Contact Page */
+        .contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            background-color: #f5f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-content {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .contact-content h1 {
+            font-size: 36px;
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        .contact-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .contact-content form {
+            margin-top: 20px;
+        }
+
+        .contact-content label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .contact-content input[type="text"],
+        .contact-content input[type="email"],
+        .contact-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .contact-content input[type="submit"] {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-content input[type="submit"]:hover {
+            background-color: #e54d42;
+        }
+
+        .contact-image {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .contact-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js"></script>
+</head>
+
+<body>
+    <div class="contact">
+        <div class="contact-content">
+            <h1>Contact us</h1>
+            <p>We're open for any suggestion or just to have a chat.</p>
+            <p> Address: RGIPT, Jais, Raebareli<br> Email: shivrealstate@gmail.com </p>
+            <form id="contact-form">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <label for="address">Address:</label><br>
+                <input type="text" id="address" name="address" required><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+                <input type="submit" value="Send Message">
+            </form>
+        </div>
+        <div class="contact-image">
+            <img src="contact us.jpg" alt="Contact Us">
+        </div>
+    </div>
+    <script>
+        
+          const firebaseConfig = {
+        apiKey: "AIzaSyCbYRhrvd2xzNDnKdmZOZDOAjO_Wh99Lrw",
+        authDomain: "realestate-2e859.firebaseapp.com",
+        databaseURL: "https://realestate-2e859-default-rtdb.firebaseio.com",
+        projectId: "realestate-2e859",
+        storageBucket: "realestate-2e859.appspot.com",
+        messagingSenderId: "381741433460",
+        appId: "1:381741433460:web:fee25b4b4bf654869d4721"
+      };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('Form submitted!');
+            const name = contactForm.name.value;
+            const email = contactForm.email.value;
+            const address = contactForm.address.value;
+            const message = contactForm.message.value;
+            db.ref('contacts').push({
+                name,
+                email,
+                address,
+                message,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+            alert('Message sent successfully!');
+            contactForm.reset();
+        });
+    </script>
+</body>
+
+</html>
